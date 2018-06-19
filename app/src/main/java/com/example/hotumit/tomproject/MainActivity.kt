@@ -2,15 +2,21 @@ package com.example.hotumit.tomproject
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
+import butterknife.BindView
 import com.example.hotumit.tomproject.adapter.ContentAdapter
 import com.example.hotumit.monthlyincome.manager.singleton.HttpManager
+import com.example.hotumit.tomproject.R.id.recyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.hotumit.tomproject.dao.*
+import kotlinx.android.synthetic.main.bottom_sheet.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,12 +26,57 @@ class MainActivity : AppCompatActivity() {
  var users : PhotoItemCollectionDao? = null*/
 
     val post : MutableList<Post> = ArrayList()
+
+    private lateinit var sheetBehavior: BottomSheetBehavior<*>
+    private var layoutBottomSheet: LinearLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loadData()
+
+        initBottomSheet()
+
+        btnRefresh.setOnClickListener {
+            toggleBottomSheet()
+        }
     }
 
+    private fun initBottomSheet() {
+        sheetBehavior = BottomSheetBehavior.from(bottom_sheet)
+
+        sheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        btnRefresh!!.text = "Close Sheet"
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        btnRefresh!!.text = "Expand Sheet"
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+        })
+    }
+
+    fun toggleBottomSheet() {
+        if (sheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            btnRefresh!!.text = "Close sheet"
+        } else {
+            sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            btnRefresh!!.text = "Expand sheet"
+        }
+    }
     fun loadData(){
         val call = HttpManager.ApiService()
         call.loadPhotoList().enqueue(object: Callback<PhotoItemCollectionDao?> {
