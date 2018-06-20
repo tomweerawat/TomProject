@@ -3,13 +3,12 @@ package com.example.hotumit.tomproject.adapter
 
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.akexorcist.listadapter.constant.Conts
 
-import com.example.hotumit.tomproject.viewholder.PhotoViewHolder
-import com.example.hotumit.tomproject.viewholder.StatusViewHolder
+import com.example.hotumit.tomproject.adapter.viewholder.PhotoViewHolder
+import com.example.hotumit.tomproject.adapter.viewholder.StatusViewHolder
 import com.example.hotumit.tomproject.R
 import com.example.hotumit.tomproject.dao.NewPhotoItemDao
 import com.example.hotumit.tomproject.dao.NewStatusPost

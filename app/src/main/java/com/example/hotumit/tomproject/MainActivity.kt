@@ -1,30 +1,48 @@
 package com.example.hotumit.tomproject
 
+import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import butterknife.BindView
 import com.example.hotumit.tomproject.adapter.ContentAdapter
 import com.example.hotumit.monthlyincome.manager.singleton.HttpManager
 import com.example.hotumit.tomproject.R.id.recyclerView
+import com.example.hotumit.tomproject.activity.FragmentMain
+import com.example.hotumit.tomproject.adapter.pageradapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.hotumit.tomproject.dao.*
+import com.example.hotumit.tomproject.fragment.CartFragment
+import com.example.hotumit.tomproject.fragment.GiftsFragment
+import com.example.hotumit.tomproject.utility.helper.BottomNavigationBehavior
+import info.androidhive.bottomnavigation.fragment.ProfileFragment
+import kotlinx.android.synthetic.main.bottom_navigation.*
+
 import kotlinx.android.synthetic.main.bottom_sheet.*
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ContentAdapter
- /*   val users : PhotoItemCollectionDao? = null
-    val users: MutableList<PhotoItemCollectionDao>? = null
- var users : PhotoItemCollectionDao? = null*/
-
+    internal lateinit var drawerLayout: DrawerLayout
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    internal lateinit var toolbar: Toolbar
+    private var viewPager: ViewPager? = null
     val post : MutableList<Post> = ArrayList()
 
     private lateinit var sheetBehavior: BottomSheetBehavior<*>
@@ -32,94 +50,96 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        loadData()
+        initInstances()
+    }
 
-        initBottomSheet()
+    private fun initInstances() {
+        /*  viewPager = findViewById<View>(R.id.viewPager) as ViewPager
+        setupViewPager(viewPager)*/
+        toolbar = findViewById(R.id.toolBarr)
+        setSupportActionBar(toolbar)
+        drawerLayout = findViewById(R.id.drawerLayout)
 
-        btnRefresh.setOnClickListener {
-            toggleBottomSheet()
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+                this@MainActivity,
+                drawerLayout,
+                R.string.open_drawer,
+                R.string.close_drawer
+        )
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        supportActionBar!!.setHomeButtonEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        // attaching bottom sheet behaviour - hide / show on scroll
+        val layoutParams = navigation.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.behavior = BottomNavigationBehavior()
+        loadFragment(FragmentMain())
+
+
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        actionBarDrawerToggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        actionBarDrawerToggle.onConfigurationChanged(newConfig)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) true else super.onOptionsItemSelected(item)
+    }
+
+
+    fun setupViewPager(upViewPager: ViewPager?) {
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(FragmentMain(), "")
+        viewPager!!.adapter = adapter
+    }
+
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        val fragment: Fragment
+        when (item.itemId) {
+            R.id.navigation_shop -> {
+                toolbar!!.title = "Shop"
+                fragment = FragmentMain()
+                loadFragment(fragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_gifts -> {
+                toolbar!!.title = "My Gifts"
+                fragment = GiftsFragment()
+                loadFragment(fragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_cart -> {
+                toolbar!!.title = "Cart"
+                fragment = CartFragment()
+                loadFragment(fragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_profile -> {
+                toolbar!!.title = "Profile"
+                fragment = ProfileFragment()
+                loadFragment(fragment)
+                return@OnNavigationItemSelectedListener true
+            }
         }
+
+        false
     }
 
-    private fun initBottomSheet() {
-        sheetBehavior = BottomSheetBehavior.from(bottom_sheet)
-
-        sheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                    }
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                        btnRefresh!!.text = "Close Sheet"
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        btnRefresh!!.text = "Expand Sheet"
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-            }
-        })
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
-
-    fun toggleBottomSheet() {
-        if (sheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            btnRefresh!!.text = "Close sheet"
-        } else {
-            sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            btnRefresh!!.text = "Expand sheet"
-        }
-    }
-    fun loadData(){
-        val call = HttpManager.ApiService()
-        call.loadPhotoList().enqueue(object: Callback<PhotoItemCollectionDao?> {
-            override fun onResponse(call: Call<PhotoItemCollectionDao?>?, response: Response<PhotoItemCollectionDao?>?) {
-                val dao = response?.body()
-
-                setupRecyclerview(dao)
-                genPhoto(dao)
-
-            }
-
-            override fun onFailure(call: Call<PhotoItemCollectionDao?>?, t: Throwable?) {
-
-            }
-
-
-        })
-    }
-
-    private fun genPhoto(dao: PhotoItemCollectionDao?) {
-
-        for (item in dao!!.data){
-            val post1 = NewPhotoItemDao(item.id.toString(),item.caption,item.createdTime,item.imageUrl)
-            val post2 = NewStatusPost(item.id.toString(),item.caption,item.createdTime)
-            post.add(post1)
-            post.add(post2)
-        }
-        Log.e("testtest","testtest"+ post)
-
-    }
-
-    private fun setupRecyclerview(dao: PhotoItemCollectionDao?) {
-
-        var dataList = dao?.data
-      /*  Log.e("dataList","dataList"+ GsonBuilder().setPrettyPrinting().create().toJson(dataList))*/
-
-        Log.e("dataList", "dataList$dataList")
-     /*   adapter = InfoAdapter(dao)*/
-        adapter = ContentAdapter()
-        adapter.submitList(post)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-    }
-
 
 }
