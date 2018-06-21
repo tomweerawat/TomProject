@@ -14,11 +14,13 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:id="@+id/recyclerView"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
-    <Button
+   <!-- <Button
         android:id="@+id/btnRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +28,7 @@
         android:layout_marginBottom="@dimen/margin_padding"
         android:layout_marginEnd="@dimen/margin_padding"
         android:text="@string/refresh" />
-    <include layout="@layout/bottom_sheet" />
+    <include layout="@layout/bottom_sheet" />-->
     <!--    <Button
             android:id="@+id/btnRefresh"
             android:layout_width="wrap_content"

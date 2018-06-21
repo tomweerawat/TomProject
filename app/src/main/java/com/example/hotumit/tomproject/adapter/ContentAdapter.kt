@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.akexorcist.listadapter.constant.Conts
+import com.example.hotumit.mykotlin.adapter.MenuHomeAdapter
 
 import com.example.hotumit.tomproject.adapter.viewholder.PhotoViewHolder
 import com.example.hotumit.tomproject.adapter.viewholder.StatusViewHolder
@@ -13,9 +14,15 @@ import com.example.hotumit.tomproject.R
 import com.example.hotumit.tomproject.dao.NewPhotoItemDao
 import com.example.hotumit.tomproject.dao.NewStatusPost
 import com.example.hotumit.tomproject.dao.Post
+import com.example.hotumit.tomproject.utility.ClickListener
 
 class ContentAdapter : ListAdapter<Post, RecyclerView.ViewHolder>(PostDiffCallback()) {
-
+    companion object {
+        public lateinit var clicklistener: ClickListener
+    }
+    fun setClickListener(listener: ClickListener) {
+        clicklistener = listener
+    }
 
     override fun getItemViewType(position: Int): Int {
     /*  if (position%2==0){

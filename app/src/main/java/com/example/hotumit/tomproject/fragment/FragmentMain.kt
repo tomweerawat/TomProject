@@ -10,21 +10,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import butterknife.BindView
 import com.example.hotumit.tomproject.adapter.ContentAdapter
 import com.example.hotumit.monthlyincome.manager.singleton.HttpManager
 import com.example.hotumit.tomproject.R
+import com.example.hotumit.tomproject.R.string.refresh
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.hotumit.tomproject.dao.*
+import com.example.hotumit.tomproject.utility.ClickListener
 import com.example.hotumit.tomproject.utility.Contextor
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
-class FragmentMain : Fragment() {
+class FragmentMain : Fragment(),ClickListener {
+    override fun itemClicked(view: View?, position: Int) {
+        Toast.makeText(Contextor.getInstance().context, "Position"+position, Toast.LENGTH_SHORT).show()
+        Log.e("dataclick","dataclick"+position)
+    }
+
     private lateinit var adapter: ContentAdapter
     /*   val users : PhotoItemCollectionDao? = null
        val users: MutableList<PhotoItemCollectionDao>? = null
@@ -71,8 +79,11 @@ class FragmentMain : Fragment() {
             Log.e("FragmentDie","FragmentDie"+savedInstanceState)
         }
     }
+/*
     private fun initBottomSheet() {
-       /* sheetBehavior = BottomSheetBehavior.from(bottom_sheet)*/
+       */
+/* sheetBehavior = BottomSheetBehavior.from(bottom_sheet)*//*
+
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet)
         sheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -98,6 +109,7 @@ class FragmentMain : Fragment() {
         })
     }
 
+
     fun toggleBottomSheet() {
         if (sheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
             sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -106,7 +118,7 @@ class FragmentMain : Fragment() {
             sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             btnRefresh!!.text = "Expand sheet"
         }
-    }
+    }*/
     fun loadData(){
         val call = HttpManager.ApiService()
         call.loadPhotoList().enqueue(object: Callback<PhotoItemCollectionDao?> {
@@ -147,8 +159,10 @@ class FragmentMain : Fragment() {
         /*   adapter = InfoAdapter(dao)*/
         adapter = ContentAdapter()
         adapter.submitList(post)
+        /*recyclerView.layoutManager = LinearLayoutManager(Contextor.getInstance().context,LinearLayoutManager.HORIZONTAL,false)*/
         recyclerView.layoutManager = LinearLayoutManager(Contextor.getInstance().context)
         recyclerView.adapter = adapter
+        adapter.setClickListener(this)
     }
 
     private fun refresh() {
