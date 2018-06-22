@@ -41,4 +41,29 @@ object HttpManager {
         return retrofit.create(ApiService::class.java)
     }
 
+    fun MovieService(): ApiService {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val client = OkHttpClient
+                .Builder()
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .addInterceptor(interceptor)
+                .build()
+
+        val gson = GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .setPrettyPrinting()
+                .create()
+        val retrofit = Retrofit.Builder()
+                .client(client)
+                .baseUrl(Conts.BaseMovie)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+        return retrofit.create(ApiService::class.java)
+    }
+
 }

@@ -32,6 +32,7 @@ import com.example.hotumit.tomproject.dao.*
 import com.example.hotumit.tomproject.fragment.CartFragment
 import com.example.hotumit.tomproject.fragment.GiftsFragment
 import com.example.hotumit.tomproject.utility.helper.BottomNavigationBehavior
+import com.google.gson.GsonBuilder
 import info.androidhive.bottomnavigation.fragment.ProfileFragment
 import kotlinx.android.synthetic.main.bottom_navigation.*
 
@@ -48,10 +49,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sheetBehavior: BottomSheetBehavior<*>
     private var layoutBottomSheet: LinearLayout? = null
+    internal lateinit var dao: MovieItemDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initInstances()
+      /*  dao = intent.getParcelableExtra("dao")
+        Log.e("KotlinFragment", "KotlinFragment" + GsonBuilder().setPrettyPrinting().create().toJson(dao))*/
     }
 
     private fun initInstances() {

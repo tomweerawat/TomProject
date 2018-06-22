@@ -6,4 +6,5 @@ object Conts {
     const val Movie = 2
     const val Menu = 3
     const val Base_Url = "https://nuuneoi.com/courses/500px/"
+    const val BaseMovie ="https://api.androidhive.info/json/"
 }

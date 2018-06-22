@@ -58,9 +58,9 @@ class FragmentMain : Fragment(),ClickListener {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_main, container, false)
         swipeRefreshLayout = rootView.findViewById<View>(R.id.swipLayoutRefresh) as SwipeRefreshLayout
-       /* btnRefresh.setOnClickListener {
-            toggleBottomSheet()
-        }*/
+        /* btnRefresh.setOnClickListener {
+             toggleBottomSheet()
+         }*/
         loadData()
 
         refresh()
@@ -69,7 +69,7 @@ class FragmentMain : Fragment(),ClickListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        
+
 
     }
 
@@ -79,9 +79,9 @@ class FragmentMain : Fragment(),ClickListener {
             Log.e("FragmentDie","FragmentDie"+savedInstanceState)
         }
     }
-/*
-    private fun initBottomSheet() {
-       */
+    /*
+        private fun initBottomSheet() {
+           */
 /* sheetBehavior = BottomSheetBehavior.from(bottom_sheet)*//*
 
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet)
