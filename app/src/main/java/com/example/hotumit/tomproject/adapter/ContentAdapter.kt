@@ -5,8 +5,7 @@ import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.akexorcist.listadapter.constant.Conts
-import com.example.hotumit.mykotlin.adapter.MenuHomeAdapter
+import com.example.hotumit.tomproject.constant.Conts
 
 import com.example.hotumit.tomproject.adapter.viewholder.PhotoViewHolder
 import com.example.hotumit.tomproject.adapter.viewholder.StatusViewHolder

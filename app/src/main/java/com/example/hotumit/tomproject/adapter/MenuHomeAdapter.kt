@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.akexorcist.listadapter.constant.Conts
+import com.example.hotumit.tomproject.constant.Conts
 import com.example.hotumit.tomproject.R
 import com.example.hotumit.tomproject.adapter.viewholder.MenuViewHolder
 import com.example.hotumit.tomproject.dao.MenuItemDao

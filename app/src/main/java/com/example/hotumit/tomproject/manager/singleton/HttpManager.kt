@@ -1,7 +1,7 @@
-package com.example.hotumit.monthlyincome.manager.singleton
+package com.example.hotumit.tomproject.manager.singleton
 
 
-import com.akexorcist.listadapter.constant.Conts
+import com.example.hotumit.tomproject.constant.Conts
 import com.example.hotumit.monthlyincome.manager.http.ApiService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -60,6 +60,30 @@ object HttpManager {
         val retrofit = Retrofit.Builder()
                 .client(client)
                 .baseUrl(Conts.BaseMovie)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+        return retrofit.create(ApiService::class.java)
+    }
+    fun DessertService(): ApiService {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val client = OkHttpClient
+                .Builder()
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .addInterceptor(interceptor)
+                .build()
+
+        val gson = GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .setPrettyPrinting()
+                .create()
+        val retrofit = Retrofit.Builder()
+                .client(client)
+                .baseUrl(Conts.BaseDessert)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 

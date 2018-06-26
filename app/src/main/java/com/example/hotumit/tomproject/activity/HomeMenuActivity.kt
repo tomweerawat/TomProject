@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.View
-import com.example.hotumit.monthlyincome.manager.singleton.HttpManager
 import com.example.hotumit.mykotlin.adapter.MenuHomeAdapter
 import com.example.hotumit.tomproject.MainActivity
 import com.example.hotumit.tomproject.R
@@ -14,11 +12,7 @@ import com.example.hotumit.tomproject.dao.*
 import com.example.hotumit.tomproject.dao.dummydata.MenuGenerator
 import com.example.hotumit.tomproject.utility.ClickListener
 import com.example.hotumit.tomproject.utility.Contextor
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.view_menu_profile.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeMenuActivity : AppCompatActivity(),ClickListener {
 

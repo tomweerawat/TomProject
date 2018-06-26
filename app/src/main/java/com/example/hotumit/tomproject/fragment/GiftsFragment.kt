@@ -7,9 +7,10 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.hotumit.monthlyincome.manager.singleton.HttpManager
-import com.example.hotumit.mykotlin.adapter.MovieAdapter
+import com.example.hotumit.tomproject.manager.singleton.HttpManager
+import com.example.hotumit.tomproject.adapter.MovieAdapter
 import com.example.hotumit.tomproject.R
+import com.example.hotumit.tomproject.constant.Conts
 import com.example.hotumit.tomproject.dao.MovieItemDao
 import com.example.hotumit.tomproject.utility.Contextor
 import kotlinx.android.synthetic.main.fragment_gifts.*
@@ -19,11 +20,11 @@ import retrofit2.Response
 
 
 class GiftsFragment : Fragment() {
-    var data : List<MovieItemDao> = ArrayList()
+   /* var data : List<MovieItemDao> = ArrayList()*/
 
     private lateinit var adapter: MovieAdapter
 
-
+    val movieItemDao : ArrayList<MovieItemDao> = ArrayList()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_gifts, container, false)
 
@@ -43,11 +44,15 @@ class GiftsFragment : Fragment() {
             }
 
             override fun onResponse(call: Call<List<MovieItemDao>?>?, response: Response<List<MovieItemDao>?>?) {
-               data = response!!.body()!!
+                val data = response!!.body()!!
+                for (item in data ){
+                    val moviedao = MovieItemDao(item.title,item.image,item.price)
+                    movieItemDao.add(moviedao)
+                }
                 val layoutManager = GridLayoutManager(Contextor.getInstance().context, 2)
                 recyclerView1.layoutManager = layoutManager
                 recyclerView1.setHasFixedSize(true)
-                val adapter = MovieAdapter(data)
+                val adapter = MovieAdapter(movieItemDao)
                 recyclerView1.adapter = adapter
 
             }

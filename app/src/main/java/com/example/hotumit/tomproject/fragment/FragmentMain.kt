@@ -13,17 +13,14 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import butterknife.BindView
 import com.example.hotumit.tomproject.adapter.ContentAdapter
-import com.example.hotumit.monthlyincome.manager.singleton.HttpManager
+import com.example.hotumit.tomproject.manager.singleton.HttpManager
 import com.example.hotumit.tomproject.R
-import com.example.hotumit.tomproject.R.string.refresh
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.hotumit.tomproject.dao.*
 import com.example.hotumit.tomproject.utility.ClickListener
 import com.example.hotumit.tomproject.utility.Contextor
-import kotlinx.android.synthetic.main.bottom_sheet.*
-import kotlinx.android.synthetic.main.bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 

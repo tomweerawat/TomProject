@@ -6,37 +6,23 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.LinearLayout
-import butterknife.BindView
 import com.example.hotumit.tomproject.adapter.ContentAdapter
-import com.example.hotumit.monthlyincome.manager.singleton.HttpManager
-import com.example.hotumit.tomproject.R.id.recyclerView
 import com.example.hotumit.tomproject.activity.FragmentMain
 import com.example.hotumit.tomproject.adapter.pageradapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import com.example.hotumit.tomproject.dao.*
 import com.example.hotumit.tomproject.fragment.CartFragment
 import com.example.hotumit.tomproject.fragment.GiftsFragment
 import com.example.hotumit.tomproject.utility.helper.BottomNavigationBehavior
-import com.google.gson.GsonBuilder
 import info.androidhive.bottomnavigation.fragment.ProfileFragment
-import kotlinx.android.synthetic.main.bottom_navigation.*
-
-import kotlinx.android.synthetic.main.bottom_sheet.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -81,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         // attaching bottom sheet behaviour - hide / show on scroll
         val layoutParams = navigation.layoutParams as CoordinatorLayout.LayoutParams
         layoutParams.behavior = BottomNavigationBehavior()
-        loadFragment(FragmentMain())
+        loadFragment(CartFragment())
 
 
     }
@@ -111,8 +97,8 @@ class MainActivity : AppCompatActivity() {
         val fragment: Fragment
         when (item.itemId) {
             R.id.navigation_shop -> {
-                toolbar!!.title = "Shop"
-                fragment = FragmentMain()
+                toolbar!!.title = "Recipe"
+                fragment = CartFragment()
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -124,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_cart -> {
                 toolbar!!.title = "Cart"
-                fragment = CartFragment()
+                fragment = FragmentMain()
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }

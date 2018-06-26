@@ -2,13 +2,12 @@ package com.example.hotumit.monthlyincome.manager.http
 
 
 
+import com.example.hotumit.tomproject.dao.DessertItemDao
 import com.example.hotumit.tomproject.dao.MovieItemDao
 import com.example.hotumit.tomproject.dao.PhotoItemCollectionDao
 
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
     @POST("list")
@@ -16,6 +15,10 @@ interface ApiService {
 
     @GET("movies_2017.json")
     fun loadMovieList():Call<List<MovieItemDao>>
+
+    @Headers("user-key: 7cd5f10c66378443bb51b7346136680c")
+    @POST("api/v2.1/collections")
+    fun loadDessertList(@Query("city_id")city_id: Int): Call<DessertItemDao>
 
     @POST("list/after/{id}")
     fun loadPhotoListAfterId(@Path("id") id: Int): Call<PhotoItemCollectionDao>
