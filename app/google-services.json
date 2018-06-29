@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "708392568525",
+    "firebase_url": "https://tomproject-b1e06.firebaseio.com",
+    "project_id": "tomproject-b1e06",
+    "storage_bucket": "tomproject-b1e06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708392568525:android:0f6ec8be445ee6f8",
+        "android_client_info": {
+          "package_name": "com.example.hotumit.tomproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708392568525-8qn6hc3oquj9ire6om57o1qfcrj4pebt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hotumit.tomproject",
+            "certificate_hash": "0738120a457fc5cc346c2a76155ec6a35f510498"
+          }
+        },
+        {
+          "client_id": "708392568525-ilajp2f69g5huknbao0a86rhc0due9mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsZUe1KZbwBMwIY726i8OXujWo-jEzHQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708392568525-ilajp2f69g5huknbao0a86rhc0due9mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
