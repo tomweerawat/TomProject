@@ -1,7 +1,6 @@
 package com.example.hotumit.tomproject
 
 import android.content.res.Configuration
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.BottomSheetBehavior
@@ -10,19 +9,20 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
-import com.example.hotumit.tomproject.adapter.ContentAdapter
 import com.example.hotumit.tomproject.activity.FragmentMain
+import com.example.hotumit.tomproject.adapter.ContentAdapter
 import com.example.hotumit.tomproject.adapter.pageradapter.ViewPagerAdapter
-import kotlinx.android.synthetic.main.activity_main.*
-import com.example.hotumit.tomproject.dao.*
+import com.example.hotumit.tomproject.dao.MovieItemDao
+import com.example.hotumit.tomproject.dao.Post
 import com.example.hotumit.tomproject.fragment.CartFragment
 import com.example.hotumit.tomproject.fragment.GiftsFragment
 import com.example.hotumit.tomproject.utility.helper.BottomNavigationBehavior
-import info.androidhive.bottomnavigation.fragment.ProfileFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_profile -> {
                 toolbar!!.title = "Profile"
-                fragment = ProfileFragment()
+                fragment = MapsFragment()
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }

@@ -9,4 +9,10 @@
     <color name="darkturquoise">#00bad2</color>
     <color name="darkslategray">#474f4f</color>
     <color name="darkgray">#999999</color>
+    <color name="gomalan_bule_bg">#00b1c7</color>
+    <color name="gomalan_green_bg">#19c594</color>
+    <color name="gomalon_dark_blue">#0097a9</color>
+    <color name="white">#FFFFFF</color>
+    <color name="purple">#8e76c6</color>
+    <color name="secondary_text">#727272</color>
 </resources>
